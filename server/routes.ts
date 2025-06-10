@@ -6,21 +6,13 @@ import { storage } from "./storage";
 import { insertContactSchema, insertDonationSchema } from "@shared/schema";
 import { z } from "zod";
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
-}
+const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: "2025-05-28.basil",
+}) : null;
 
-if (!process.env.OPENAI_API_KEY) {
-  throw new Error('Missing required OpenAI API key: OPENAI_API_KEY');
-}
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2024-11-20.acacia",
-});
-
-const openai = new OpenAI({ 
+const openai = process.env.OPENAI_API_KEY ? new OpenAI({ 
   apiKey: process.env.OPENAI_API_KEY 
-});
+}) : null;
 
 export async function registerRoutes(app: Express): Promise<Server> {
   
@@ -52,6 +44,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Create payment intent for donations
   app.post("/api/create-payment-intent", async (req, res) => {
     try {
+      if (!stripe) {
+        return res.status(503).json({ 
+          message: "Payment processing is temporarily unavailable. Please contact support." 
+        });
+      }
+
       const { amount, donorEmail, donorName, isRecurring } = req.body;
       
       if (!amount || amount < 50) { // Minimum $0.50
@@ -125,6 +123,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!message || typeof message !== 'string') {
         return res.status(400).json({ 
           message: "Message is required" 
+        });
+      }
+
+      if (!openai) {
+        return res.status(503).json({ 
+          message: "AI assistant is temporarily unavailable. Please contact support to enable this feature." 
         });
       }
 

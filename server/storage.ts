@@ -63,8 +63,12 @@ export class MemStorage implements IStorage {
   async createDonation(insertDonation: InsertDonation): Promise<Donation> {
     const id = this.currentDonationId++;
     const donation: Donation = {
-      ...insertDonation,
       id,
+      amount: insertDonation.amount,
+      donorEmail: insertDonation.donorEmail ?? null,
+      donorName: insertDonation.donorName ?? null,
+      stripePaymentIntentId: insertDonation.stripePaymentIntentId,
+      isRecurring: insertDonation.isRecurring ?? false,
       createdAt: new Date()
     };
     this.donations.set(id, donation);

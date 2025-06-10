@@ -13,7 +13,7 @@ import { apiRequest } from "@/lib/queryClient";
 import { Heart, Utensils, BookOpen, Home, Shield } from "lucide-react";
 
 const stripePromise = loadStripe(
-  import.meta.env.VITE_STRIPE_PUBLIC_KEY || process.env.VITE_STRIPE_PUBLIC_KEY || ""
+  import.meta.env.VITE_STRIPE_PUBLIC_KEY || ""
 );
 
 const DonationForm = () => {
