@@ -198,13 +198,13 @@ const DonationStats = () => {
       <CardContent className="space-y-6">
         <div className="grid grid-cols-2 gap-6">
           <div className="text-center">
-            <div className="text-3xl font-bold text-green-600">
+            <div className="text-3xl font-bold text-red-500">
               ${mockStats.totalAmount.toLocaleString()}
             </div>
             <div className="text-sm text-muted-foreground">Total Raised</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-blue-600">
+            <div className="text-3xl font-bold text-red-400">
               {mockStats.totalDonations}
             </div>
             <div className="text-sm text-muted-foreground">Donors</div>
@@ -221,14 +221,14 @@ const DonationStats = () => {
 
         <div className="grid grid-cols-2 gap-4 text-center">
           <div className="flex flex-col items-center space-y-2">
-            <Utensils className="h-8 w-8 text-orange-500" />
+            <Utensils className="h-8 w-8 text-red-500" />
             <div className="text-sm">
               <div className="font-semibold">{Math.floor(mockStats.totalAmount / 5)}</div>
               <div className="text-muted-foreground">Meals Provided</div>
             </div>
           </div>
           <div className="flex flex-col items-center space-y-2">
-            <Home className="h-8 w-8 text-purple-500" />
+            <Home className="h-8 w-8 text-red-400" />
             <div className="text-sm">
               <div className="font-semibold">{Math.floor(mockStats.totalAmount / 100)}</div>
               <div className="text-muted-foreground">Families Helped</div>
@@ -256,7 +256,7 @@ export default function Donate() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Shield className="h-5 w-5 text-green-500" />
+                <Shield className="h-5 w-5 text-red-500" />
                 Secure Donations
               </CardTitle>
             </CardHeader>
@@ -271,7 +271,7 @@ export default function Donate() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <BookOpen className="h-5 w-5 text-blue-500" />
+                <BookOpen className="h-5 w-5 text-red-500" />
                 How We Use Donations
               </CardTitle>
             </CardHeader>

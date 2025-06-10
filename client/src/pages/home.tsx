@@ -7,21 +7,21 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-brand-blue to-blue-700 text-white py-20">
+      <section className="bg-gradient-to-br from-red-900 to-black text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
                 Fighting Food Insecurity at{" "}
-                <span className="text-brand-orange">UMD</span>
+                <span className="text-red-400">UMD</span>
               </h1>
-              <p className="text-xl mb-8 text-blue-100 leading-relaxed">
+              <p className="text-xl mb-8 text-gray-300 leading-relaxed">
                 Over 27% of UMD students face food insecurity. That's 1 in 4 of our peers 
                 struggling to afford their next meal. Join Hearts in Action to break this cycle.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/donate">
-                  <Button size="lg" className="bg-brand-red hover:bg-red-700 text-white">
+                  <Button size="lg" className="bg-red-600 hover:bg-red-700 text-white">
                     <Heart className="h-5 w-5 mr-2" />
                     Donate Now
                   </Button>
@@ -30,7 +30,7 @@ export default function Home() {
                   <Button 
                     size="lg" 
                     variant="outline" 
-                    className="border-white text-white hover:bg-white hover:text-brand-blue"
+                    className="border-white text-white hover:bg-white hover:text-black"
                   >
                     Learn More
                   </Button>
@@ -43,9 +43,9 @@ export default function Home() {
                 alt="Students helping community members with food distribution"
                 className="rounded-xl shadow-2xl w-full"
               />
-              <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-lg">
-                <div className="text-brand-blue text-2xl font-bold">27%</div>
-                <div className="text-gray-600 text-sm">of UMD students face food insecurity</div>
+              <div className="absolute -bottom-6 -left-6 bg-black border border-red-500 p-6 rounded-xl shadow-lg">
+                <div className="text-red-500 text-2xl font-bold">27%</div>
+                <div className="text-gray-300 text-sm">of UMD students face food insecurity</div>
               </div>
             </div>
           </div>
