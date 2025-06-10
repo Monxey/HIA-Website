@@ -1,30 +1,27 @@
-import { useState, useEffect } from "react";
-import { useElements, useStripe, CardElement, Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
-import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
 import { Heart, Utensils, BookOpen, Home, Shield } from "lucide-react";
 
-const stripePromise = loadStripe(
-  import.meta.env.VITE_STRIPE_PUBLIC_KEY || ""
-);
+// TODO: Add Stripe integration here
+// Import the following when ready:
+// import { useElements, useStripe, CardElement, Elements } from "@stripe/react-stripe-js";
+// import { loadStripe } from "@stripe/stripe-js";
+// import { useMutation } from "@tanstack/react-query";
+// import { useToast } from "@/hooks/use-toast";
+// import { apiRequest } from "@/lib/queryClient";
+// 
+// const stripePromise = loadStripe("your-stripe-public-key");
 
 const DonationForm = () => {
-  const stripe = useStripe();
-  const elements = useElements();
-  const { toast } = useToast();
-  
   const [selectedAmount, setSelectedAmount] = useState<number>(25);
   const [customAmount, setCustomAmount] = useState<string>("");
   const [donationType, setDonationType] = useState<string>("one-time");
-  const [clientSecret, setClientSecret] = useState<string>("");
   const [donorInfo, setDonorInfo] = useState({
     name: "",
     email: ""
@@ -36,23 +33,6 @@ const DonationForm = () => {
     { amount: 100, description: "20 meals" },
     { amount: 250, description: "50 meals" },
   ];
-
-  const createPaymentIntent = useMutation({
-    mutationFn: (data: { amount: number; donorEmail?: string; donorName?: string; isRecurring: boolean }) =>
-      apiRequest("POST", "/api/create-payment-intent", data),
-    onSuccess: (response) => {
-      response.json().then((data) => {
-        setClientSecret(data.clientSecret);
-      });
-    },
-    onError: (error: any) => {
-      toast({
-        title: "Error",
-        description: error.message || "Failed to initialize payment",
-        variant: "destructive",
-      });
-    },
-  });
 
   const handleAmountSelection = (amount: number) => {
     setSelectedAmount(amount);
@@ -67,161 +47,70 @@ const DonationForm = () => {
     }
   };
 
-  const initializePayment = () => {
+  const handleDonateClick = () => {
+    // TODO: Add payment processing logic here
+    // This is where you'll integrate your payment provider
     const amount = customAmount ? parseFloat(customAmount) : selectedAmount;
-    if (amount < 0.5) {
-      toast({
-        title: "Invalid Amount",
-        description: "Minimum donation amount is $0.50",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    createPaymentIntent.mutate({
+    console.log("Processing donation:", {
       amount,
-      donorEmail: donorInfo.email,
-      donorName: donorInfo.name,
-      isRecurring: donationType === "monthly"
+      type: donationType,
+      donor: donorInfo
     });
+    alert("Payment integration coming soon!");
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!stripe || !elements || !clientSecret) {
-      if (!clientSecret) {
-        initializePayment();
-      }
-      return;
-    }
-
-    const cardElement = elements.getElement(CardElement);
-    if (!cardElement) return;
-
-    const { error } = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: cardElement,
-        billing_details: {
-          name: donorInfo.name,
-          email: donorInfo.email,
-        },
-      },
-    });
-
-    if (error) {
-      toast({
-        title: "Payment Failed",
-        description: error.message,
-        variant: "destructive",
-      });
-    } else {
-      toast({
-        title: "Thank You!",
-        description: "Your donation has been processed successfully.",
-      });
-      
-      // Record the donation
-      apiRequest("POST", "/api/donation-success", {
-        paymentIntentId: clientSecret.split("_secret")[0],
-        amount: customAmount ? parseFloat(customAmount) : selectedAmount,
-        donorEmail: donorInfo.email,
-        donorName: donorInfo.name,
-        isRecurring: donationType === "monthly"
-      });
-
-      // Reset form
-      setClientSecret("");
-      setDonorInfo({ name: "", email: "" });
-      setSelectedAmount(25);
-      setCustomAmount("");
-    }
-  };
+  const displayAmount = customAmount ? parseFloat(customAmount) : selectedAmount;
 
   return (
-    <Card className="shadow-sm">
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold text-gray-900">
-          Choose Your Donation
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Donor Information */}
-          <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="donor-name">Full Name (Optional)</Label>
-              <Input
-                id="donor-name"
-                value={donorInfo.name}
-                onChange={(e) => setDonorInfo(prev => ({ ...prev, name: e.target.value }))}
-                placeholder="Your name"
-              />
-            </div>
-            <div>
-              <Label htmlFor="donor-email">Email (Optional)</Label>
-              <Input
-                id="donor-email"
-                type="email"
-                value={donorInfo.email}
-                onChange={(e) => setDonorInfo(prev => ({ ...prev, email: e.target.value }))}
-                placeholder="your.email@example.com"
-              />
-            </div>
-          </div>
+    <div className="max-w-2xl mx-auto space-y-8">
+      <div className="text-center">
+        <h2 className="text-3xl font-bold mb-4">Make a Donation</h2>
+        <p className="text-muted-foreground">
+          Every dollar helps us provide meals and support to those in need
+        </p>
+      </div>
 
+      <Card>
+        <CardHeader>
+          <CardTitle>Choose Your Impact</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
           {/* Preset Amounts */}
-          <div>
-            <Label className="text-sm font-medium text-gray-700 mb-3 block">
-              Select Amount
-            </Label>
-            <div className="grid grid-cols-2 gap-3">
-              {presetAmounts.map((preset) => (
-                <Button
-                  key={preset.amount}
-                  type="button"
-                  variant="outline"
-                  className={`p-4 h-auto ${
-                    selectedAmount === preset.amount && !customAmount
-                      ? "border-brand-red bg-red-50"
-                      : "border-gray-300 hover:border-brand-red hover:bg-red-50"
-                  }`}
-                  onClick={() => handleAmountSelection(preset.amount)}
-                >
-                  <div className="text-center">
-                    <div className="text-2xl font-bold">${preset.amount}</div>
-                    <div className="text-sm text-gray-600">{preset.description}</div>
-                  </div>
-                </Button>
-              ))}
-            </div>
+          <div className="grid grid-cols-2 gap-4">
+            {presetAmounts.map((preset) => (
+              <Button
+                key={preset.amount}
+                variant={selectedAmount === preset.amount && !customAmount ? "default" : "outline"}
+                onClick={() => handleAmountSelection(preset.amount)}
+                className="h-auto p-4 flex flex-col items-center"
+              >
+                <span className="text-lg font-semibold">${preset.amount}</span>
+                <span className="text-sm text-muted-foreground">{preset.description}</span>
+              </Button>
+            ))}
           </div>
 
           {/* Custom Amount */}
-          <div>
-            <Label htmlFor="custom-amount" className="text-sm font-medium text-gray-700 mb-2 block">
-              Custom Amount
-            </Label>
+          <div className="space-y-2">
+            <Label htmlFor="custom-amount">Or enter a custom amount</Label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
               <Input
                 id="custom-amount"
                 type="number"
-                step="0.01"
-                min="0.50"
                 placeholder="0.00"
-                className="pl-8"
                 value={customAmount}
                 onChange={(e) => handleCustomAmountChange(e.target.value)}
+                className="pl-8"
+                min="0.50"
+                step="0.01"
               />
             </div>
           </div>
 
           {/* Donation Type */}
-          <div>
-            <Label className="text-sm font-medium text-gray-700 mb-3 block">
-              Donation Type
-            </Label>
+          <div className="space-y-3">
+            <Label>Donation Type</Label>
             <RadioGroup value={donationType} onValueChange={setDonationType}>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="one-time" id="one-time" />
@@ -229,151 +118,180 @@ const DonationForm = () => {
               </div>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="monthly" id="monthly" />
-                <Label htmlFor="monthly">Monthly recurring</Label>
+                <Label htmlFor="monthly">Monthly donation</Label>
               </div>
             </RadioGroup>
           </div>
 
-          {/* Payment Element */}
-          {clientSecret && (
-            <div>
-              <Label className="text-sm font-medium text-gray-700 mb-3 block">
-                Payment Information
-              </Label>
-              <div className="border border-gray-300 rounded-lg p-4">
-                <CardElement
-                  options={{
-                    style: {
-                      base: {
-                        fontSize: "16px",
-                        color: "#424770",
-                        "::placeholder": {
-                          color: "#aab7c4",
-                        },
-                      },
-                    },
-                  }}
+          {/* Donor Information */}
+          <div className="space-y-4">
+            <h3 className="font-semibold">Donor Information (Optional)</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="donor-name">Full Name</Label>
+                <Input
+                  id="donor-name"
+                  value={donorInfo.name}
+                  onChange={(e) => setDonorInfo(prev => ({ ...prev, name: e.target.value }))}
+                  placeholder="Your name"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="donor-email">Email</Label>
+                <Input
+                  id="donor-email"
+                  type="email"
+                  value={donorInfo.email}
+                  onChange={(e) => setDonorInfo(prev => ({ ...prev, email: e.target.value }))}
+                  placeholder="your@email.com"
                 />
               </div>
             </div>
-          )}
+          </div>
 
-          {/* Submit Button */}
-          <Button
-            type="submit"
-            className="w-full bg-brand-red hover:bg-red-700 text-white py-4"
-            disabled={createPaymentIntent.isPending || (!stripe && !!clientSecret)}
+          {/* TODO: Add payment form here */}
+          {/* This is where you'll add your payment processing form */}
+          <div className="border-2 border-dashed border-muted rounded-lg p-8 text-center text-muted-foreground">
+            <p className="mb-4">Payment form will be integrated here</p>
+            <p className="text-sm">Add your preferred payment processor (Stripe, PayPal, etc.)</p>
+          </div>
+
+          {/* Donate Button */}
+          <Button 
+            onClick={handleDonateClick}
+            className="w-full" 
+            size="lg"
+            disabled={!displayAmount || displayAmount < 0.5}
           >
-            <Shield className="h-5 w-5 mr-2" />
-            {!clientSecret 
-              ? "Continue to Payment" 
-              : createPaymentIntent.isPending 
-                ? "Processing..." 
-                : "Complete Donation"
-            }
+            Donate ${displayAmount?.toFixed(2) || '0.00'}
+            {donationType === "monthly" && " Monthly"}
           </Button>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
 
-          <p className="text-xs text-gray-500 text-center">
-            <Shield className="h-4 w-4 mr-1 inline" />
-            Secure payment powered by Stripe. Your information is protected.
-          </p>
-        </form>
+const DonationStats = () => {
+  // TODO: Connect to real donation statistics API
+  const donationStats = useQuery({
+    queryKey: ['/api/donation-stats'],
+    enabled: false, // Disabled until API keys are added
+  });
+
+  // Mock data for display purposes - replace with real data when API is connected
+  const mockStats = {
+    totalAmount: 12450,
+    totalDonations: 156,
+  };
+
+  const progressToGoal = (mockStats.totalAmount / 25000) * 100;
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Heart className="h-5 w-5 text-red-500" />
+          Our Impact So Far
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <div className="grid grid-cols-2 gap-6">
+          <div className="text-center">
+            <div className="text-3xl font-bold text-green-600">
+              ${mockStats.totalAmount.toLocaleString()}
+            </div>
+            <div className="text-sm text-muted-foreground">Total Raised</div>
+          </div>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-blue-600">
+              {mockStats.totalDonations}
+            </div>
+            <div className="text-sm text-muted-foreground">Donors</div>
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <div className="flex justify-between text-sm">
+            <span>Progress to $25,000 goal</span>
+            <span>{progressToGoal.toFixed(1)}%</span>
+          </div>
+          <Progress value={progressToGoal} className="h-3" />
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 text-center">
+          <div className="flex flex-col items-center space-y-2">
+            <Utensils className="h-8 w-8 text-orange-500" />
+            <div className="text-sm">
+              <div className="font-semibold">{Math.floor(mockStats.totalAmount / 5)}</div>
+              <div className="text-muted-foreground">Meals Provided</div>
+            </div>
+          </div>
+          <div className="flex flex-col items-center space-y-2">
+            <Home className="h-8 w-8 text-purple-500" />
+            <div className="text-sm">
+              <div className="font-semibold">{Math.floor(mockStats.totalAmount / 100)}</div>
+              <div className="text-muted-foreground">Families Helped</div>
+            </div>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );
 };
 
 export default function Donate() {
-  const { data: donationStats } = useQuery({
-    queryKey: ["/api/donation-stats"],
-    refetchInterval: 30000, // Refetch every 30 seconds
-  });
-
-  const currentProgress = donationStats ? Math.min((donationStats.totalAmount / 5000) * 100, 100) : 65;
-
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-brand-red to-red-700 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Make a Difference Today</h1>
-          <p className="text-xl text-red-100 max-w-3xl mx-auto">
-            Your donation directly supports UMD students facing food and material insecurity. 
-            Every dollar makes a real impact.
-          </p>
+    <div className="container mx-auto px-4 py-8">
+      <div className="grid lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2">
+          {/* TODO: Wrap DonationForm with Stripe Elements provider when ready */}
+          {/* <Elements stripe={stripePromise}> */}
+            <DonationForm />
+          {/* </Elements> */}
         </div>
-      </section>
+        <div className="space-y-6">
+          <DonationStats />
+          
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Shield className="h-5 w-5 text-green-500" />
+                Secure Donations
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                Your donation is secure and encrypted. We never store your payment information.
+                All transactions are processed through industry-standard secure payment processors.
+              </p>
+            </CardContent>
+          </Card>
 
-      {/* Main Content */}
-      <section className="bg-gray-50 py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Donation Form */}
-            <Elements stripe={stripePromise}>
-              <DonationForm />
-            </Elements>
-
-            {/* Impact Information */}
-            <div className="space-y-8">
-              <Card className="shadow-sm">
-                <CardHeader>
-                  <CardTitle className="text-xl font-bold text-gray-900">
-                    Your Impact
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="flex items-center">
-                    <div className="w-12 h-12 bg-brand-green rounded-full flex items-center justify-center mr-4">
-                      <Utensils className="h-6 w-6 text-white" />
-                    </div>
-                    <div>
-                      <div className="font-semibold">$25 provides</div>
-                      <div className="text-gray-600">5 nutritious meals for students</div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center">
-                    <div className="w-12 h-12 bg-brand-blue rounded-full flex items-center justify-center mr-4">
-                      <BookOpen className="h-6 w-6 text-white" />
-                    </div>
-                    <div>
-                      <div className="font-semibold">$50 provides</div>
-                      <div className="text-gray-600">Essential school supplies for one semester</div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center">
-                    <div className="w-12 h-12 bg-brand-orange rounded-full flex items-center justify-center mr-4">
-                      <Home className="h-6 w-6 text-white" />
-                    </div>
-                    <div>
-                      <div className="font-semibold">$100 provides</div>
-                      <div className="text-gray-600">Winter clothing package for one student</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Progress Tracker */}
-              <Card className="shadow-sm">
-                <CardContent className="p-6">
-                  <div className="text-sm text-gray-600 mb-2">This month's goal</div>
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="font-semibold">
-                      ${donationStats?.totalAmount?.toFixed(2) || "3,240"} raised
-                    </span>
-                    <span className="text-gray-600">of $5,000</span>
-                  </div>
-                  <Progress value={currentProgress} className="mb-2" />
-                  <div className="text-xs text-gray-500">
-                    {Math.floor((donationStats?.totalAmount || 3240) / 5)} meals provided this month
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BookOpen className="h-5 w-5 text-blue-500" />
+                How We Use Donations
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div className="flex justify-between">
+                <span className="text-sm">Direct Food Assistance</span>
+                <span className="text-sm font-semibold">75%</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-sm">Program Operations</span>
+                <span className="text-sm font-semibold">20%</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-sm">Administrative Costs</span>
+                <span className="text-sm font-semibold">5%</span>
+              </div>
+            </CardContent>
+          </Card>
         </div>
-      </section>
+      </div>
     </div>
   );
 }
