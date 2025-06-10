@@ -151,7 +151,7 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/donate">
-              <Button size="lg" className="bg-brand-red hover:bg-red-700 text-white">
+              <Button size="lg" className="bg-white hover:bg-gray-100 text-red-900">
                 <Heart className="h-5 w-5 mr-2" />
                 Make a Donation
               </Button>
@@ -160,7 +160,7 @@ export default function Home() {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="border-white text-white hover:bg-white hover:text-brand-blue"
+                className="border-white text-white hover:bg-white hover:text-red-900"
               >
                 Get Involved
               </Button>
