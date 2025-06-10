@@ -53,31 +53,31 @@ export default function Home() {
       </section>
 
       {/* Impact Statistics */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">The Reality of Food Insecurity</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-3xl font-bold text-white mb-4">The Reality of Food Insecurity</h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               These aren't just numbers—they represent real students in our community who need our support.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="p-8 bg-red-50 border-red-200">
+            <Card className="p-8 bg-red-900/20 border-red-500">
               <CardContent className="text-center p-0">
-                <div className="text-4xl font-bold text-brand-red mb-2">40%</div>
-                <div className="text-gray-700">Fall asleep in class or can't focus due to hunger</div>
+                <div className="text-4xl font-bold text-red-400 mb-2">40%</div>
+                <div className="text-gray-300">Fall asleep in class or can't focus due to hunger</div>
               </CardContent>
             </Card>
-            <Card className="p-8 bg-blue-50 border-blue-200">
+            <Card className="p-8 bg-red-900/10 border-red-600">
               <CardContent className="text-center p-0">
-                <div className="text-4xl font-bold text-brand-blue mb-2">13%</div>
-                <div className="text-gray-700">Have failed assignments because they didn't have enough to eat</div>
+                <div className="text-4xl font-bold text-red-500 mb-2">13%</div>
+                <div className="text-gray-300">Have failed assignments because they didn't have enough to eat</div>
               </CardContent>
             </Card>
-            <Card className="p-8 bg-green-50 border-green-200">
+            <Card className="p-8 bg-red-900/30 border-red-400">
               <CardContent className="text-center p-0">
-                <div className="text-4xl font-bold text-brand-green mb-2">1 in 4</div>
-                <div className="text-gray-700">Students struggle to afford their next meal</div>
+                <div className="text-4xl font-bold text-red-300 mb-2">1 in 4</div>
+                <div className="text-gray-300">Students struggle to afford their next meal</div>
               </CardContent>
             </Card>
           </div>
@@ -85,54 +85,54 @@ export default function Home() {
       </section>
 
       {/* What We Do */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">How We Help</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-4xl font-bold text-white mb-4">How We Help</h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Hearts in Action provides comprehensive support to address food and material insecurity 
               in our community through various initiatives.
             </p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="p-6 hover:shadow-lg transition-shadow">
+            <Card className="p-6 hover:shadow-lg transition-shadow bg-gray-900 border-red-900">
               <CardContent className="p-0">
                 <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-brand-green rounded-full flex items-center justify-center mr-4">
+                  <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center mr-4">
                     <Utensils className="h-6 w-6 text-white" />
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900">Food Drives</h3>
+                  <h3 className="text-xl font-semibold text-white">Food Drives</h3>
                 </div>
-                <p className="text-gray-600">
+                <p className="text-gray-300">
                   Regular food collection and distribution to students in need, ensuring no one goes hungry.
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="p-6 hover:shadow-lg transition-shadow">
+            <Card className="p-6 hover:shadow-lg transition-shadow bg-gray-900 border-red-900">
               <CardContent className="p-0">
                 <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-brand-blue rounded-full flex items-center justify-center mr-4">
+                  <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center mr-4">
                     <Users className="h-6 w-6 text-white" />
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900">Clothing Assistance</h3>
+                  <h3 className="text-xl font-semibold text-white">Clothing Assistance</h3>
                 </div>
-                <p className="text-gray-600">
+                <p className="text-gray-300">
                   Warm clothing and professional attire for students to succeed academically and professionally.
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="p-6 hover:shadow-lg transition-shadow">
+            <Card className="p-6 hover:shadow-lg transition-shadow bg-gray-900 border-red-900">
               <CardContent className="p-0">
                 <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-brand-orange rounded-full flex items-center justify-center mr-4">
+                  <div className="w-12 h-12 bg-red-700 rounded-full flex items-center justify-center mr-4">
                     <GraduationCap className="h-6 w-6 text-white" />
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900">Educational Support</h3>
+                  <h3 className="text-xl font-semibold text-white">Educational Support</h3>
                 </div>
-                <p className="text-gray-600">
+                <p className="text-gray-300">
                   School supplies and resources for academic success, removing barriers to education.
                 </p>
               </CardContent>
@@ -142,10 +142,10 @@ export default function Home() {
       </section>
 
       {/* Call to Action */}
-      <section className="py-20 bg-brand-blue text-white">
+      <section className="py-20 bg-gradient-to-r from-red-900 to-red-700 text-white">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold mb-6">Ready to Make a Difference?</h2>
-          <p className="text-xl text-blue-100 mb-8">
+          <p className="text-xl text-red-100 mb-8">
             Every action counts. Whether you donate, volunteer, or spread awareness, 
             you can help break the cycle of food insecurity.
           </p>

@@ -22,14 +22,14 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+    <nav className="bg-black shadow-sm border-b border-red-900 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
-              <Heart className="h-8 w-8 text-brand-blue" />
-              <h1 className="text-xl font-bold text-brand-blue">Hearts in Action</h1>
+              <Heart className="h-8 w-8 text-red-500" />
+              <h1 className="text-xl font-bold text-red-500">Hearts in Action</h1>
             </Link>
           </div>
 
@@ -42,8 +42,8 @@ export default function Navigation() {
                     variant="ghost"
                     className={`px-3 py-2 text-sm font-medium transition-colors ${
                       isActive(item.href)
-                        ? "text-gray-900 bg-gray-100"
-                        : "text-gray-500 hover:text-brand-blue"
+                        ? "text-red-500 bg-red-900/20"
+                        : "text-gray-300 hover:text-red-400"
                     }`}
                   >
                     {item.name}
@@ -51,7 +51,7 @@ export default function Navigation() {
                 </Link>
               ))}
               <Link href="/donate">
-                <Button className="bg-brand-red hover:bg-red-700 text-white">
+                <Button className="bg-red-600 hover:bg-red-700 text-white">
                   <Heart className="h-4 w-4 mr-2" />
                   Donate
                 </Button>
@@ -63,7 +63,7 @@ export default function Navigation() {
           <div className="md:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon">
+                <Button variant="ghost" size="icon" className="text-gray-300 hover:text-red-400">
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
@@ -75,8 +75,8 @@ export default function Navigation() {
                         variant="ghost"
                         className={`w-full justify-start text-base ${
                           isActive(item.href)
-                            ? "text-gray-900 bg-gray-100"
-                            : "text-gray-500"
+                            ? "text-red-500 bg-red-900/20"
+                            : "text-gray-300 hover:text-red-400"
                         }`}
                         onClick={() => setIsOpen(false)}
                       >
@@ -86,7 +86,7 @@ export default function Navigation() {
                   ))}
                   <Link href="/donate">
                     <Button 
-                      className="w-full bg-brand-red hover:bg-red-700 text-white"
+                      className="w-full bg-red-600 hover:bg-red-700 text-white"
                       onClick={() => setIsOpen(false)}
                     >
                       <Heart className="h-4 w-4 mr-2" />
