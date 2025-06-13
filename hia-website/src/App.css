@@ -4,15 +4,30 @@
   padding: 0;
 
   /* Hearts in Action Brand Colors - Black/Red Theme */
-  --brand-primary: rgb(238, 43, 43);
+  --brand-primary: rgb(199, 34, 34);
   --brand-secondary: rgb(242, 90, 90);
   --brand-dark: rgb(20, 20, 20);
   --brand-accent: rgb(242, 242, 242);
+
+  --gray-primary: rgb(209, 209, 209);
 }
 
 body {
   margin: 0;
   padding: 0;
+}
+
+.caption {
+  position: absolute;
+  bottom: -1rem;  /* slightly overlaps the image */
+  left: -2rem;
+  background-color: var(--brand-dark);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  max-width: auto;
+  font-size: medium;
+  text-align: left;
+  border: 0.15rem solid var(--brand-primary);
 }
 
 .logo:hover {
@@ -45,27 +60,17 @@ body {
   color: #505050;
 }
 
-.chromatic-glow {
-  position: relative;
-  z-index: 1;
+.gradient-section {
+  background: linear-gradient(to bottom right, var(--brand-primary), var(--brand-dark));
+  color: white;
+  padding: 6rem 2rem;
 }
 
-.chromatic-glow::before {
-  content: '';
-  position: absolute;
-  top: -4px;
-  left: -4px;
-  right: -4px;
-  bottom: -4px;
-  z-index: -1;
-  background: linear-gradient(45deg, var(--brand-primary), var(--brand-dark), var(--brand-accent));
-  filter: blur(8px);
-  opacity: 0.6;
-  border-radius: inherit;
-  animation: glowShift 8s ease-in-out infinite;
-}
-
-@keyframes glowShift {
-  0% { filter: hue-rotate(0deg); }
-  100% { filter: hue-rotate(360deg); }
+.grid {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  margin: 0 auto;
 }
