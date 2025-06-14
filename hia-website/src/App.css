@@ -1,0 +1,66 @@
+#root {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+
+  /* Hearts in Action Brand Colors - Black/Red Theme */
+  --brand-primary: rgb(199, 34, 34);
+  --brand-secondary: rgb(242, 90, 90);
+  --brand-dark: rgb(20, 20, 20);
+  --brand-accent: rgb(242, 242, 242);
+
+  --gray-primary: rgb(209, 209, 209);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.caption {
+  position: absolute;
+  bottom: -1rem;  /* slightly overlaps the image */
+  left: -2rem;
+  background-color: var(--brand-dark);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  max-width: auto;
+  font-size: medium;
+  text-align: left;
+  border: 0.15rem solid var(--brand-primary);
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.read-the-docs {
+  color: #505050;
+}
+
+.gradient-section {
+  background: linear-gradient(to bottom right, var(--brand-primary), var(--brand-dark));
+  color: white;
+  padding: 6rem 2rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  margin: 0 auto;
+}

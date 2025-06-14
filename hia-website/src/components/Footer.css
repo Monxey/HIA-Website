@@ -1,0 +1,94 @@
+@import '../App.css';
+
+.footer {
+  background-color: var(--brand-dark);
+  color: #f1f1f1;
+  padding: 3rem 1.5rem 1.5rem;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 1rem;
+  max-width: 1000px;
+  margin: auto;
+  align-items: start;
+}
+
+.footer-left {
+  font-size: 1.8rem;
+  color: var(--brand-primary);
+  text-align: left;
+  justify-items: left;
+}
+
+h2 {
+    margin: 0%;
+    padding: 0%;
+    color: white;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0%;
+    padding: 0%;
+}
+
+.description {
+  font-size: 1rem;
+  color: #ccc;
+  text-align: left;
+  margin-left: 4.5rem;
+  padding: 0;
+  margin-top: 0;
+}
+
+.footer-links,
+.footer-social {
+  font-size: 0.95rem;
+}
+
+.footer-links h3,
+.footer-social h3 {
+  color: var(--brand-primary);
+  margin-bottom: 10px;
+}
+
+.footer-links ul,
+.footer-social ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li,
+.footer-social li {
+  margin-bottom: 8px;
+}
+
+.footer-links a,
+.footer-social a {
+  color: #f1f1f1;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+.footer-links a:hover,
+.footer-social a:hover {
+  color: var(--brand-secondary);
+}
+
+.logo {
+  height: 4rem;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  border-top: 1px solid #444;
+  padding-top: 15px;
+  font-size: 0.8rem;
+  color: #aaa;
+}

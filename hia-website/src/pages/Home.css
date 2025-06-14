@@ -1,0 +1,47 @@
+@import '../App.css';
+
+.stat-background {
+    background-color: rgb(32, 32, 48);
+    padding: 2rem;
+    font-family: sans-serif;
+}
+
+.stat-layout {
+    text-align: center;
+    margin: 1rem;
+}
+
+.card-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+    margin: 2rem auto;
+    max-width: 70%;
+}
+
+.card {
+    border: 0.15rem solid var(--brand-secondary);
+    border-radius: 1rem;
+    background-color: rgba(199, 34, 34, 0.1);
+    width: 75%;
+    padding: 2rem;
+    margin: 0;
+}
+
+.card-title {
+    font-size: 2rem;
+    color: var(--brand-secondary);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.card-desc {
+    font-size: 1rem;
+    margin: 0.5rem;
+    color: var(--gray-primary);
+    text-align: center;
+}
+
+h1 {
+    color: white;
+    font-size: 2rem;
+}
